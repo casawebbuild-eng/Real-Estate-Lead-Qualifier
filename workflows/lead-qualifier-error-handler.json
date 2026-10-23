@@ -1,0 +1,74 @@
+{
+  "name": "Lead Qualifier - Error Handler",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "1b3b3943-8355-4c56-a8c4-859dd3e95d49",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "chatId": "YOUR_TELEGRAM_CHAT_ID",
+        "text": "={{ '<b>Workflow error</b>\\n' + 'Workflow: ' + String($json.workflow?.name ?? 'unknown').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '\\n' + 'Failing node: ' + String($json.execution?.lastNodeExecuted ?? 'unknown').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '\\n' + 'Error: ' + String($json.execution?.error?.message ?? 'unknown').slice(0, 500).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '\\n' + 'Execution: ' + String($json.execution?.id ?? 'n/a') }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        160,
+        0
+      ],
+      "id": "083796cd-7229-4267-8a67-0f2242ee74bd",
+      "name": "Send a text message"
+    },
+    {
+      "parameters": {
+        "content": "## Error Handler",
+        "height": 208,
+        "width": 384,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -48,
+        -48
+      ],
+      "id": "73d8370b-abeb-463e-8cab-2338392ffc87",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "nodeGroups": [],
+  "tags": []
+}

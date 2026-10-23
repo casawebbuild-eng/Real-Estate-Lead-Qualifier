@@ -1,0 +1,11 @@
+# Raw n8n exports contain credential IDs, chat IDs and sheet IDs.
+# Only the sanitised copies in workflows/ belong in this repo.
+raw/
+*.raw.json
+
+# Local test payloads and environment files
+t.json
+p.json
+body.json
+.env
+*.env
